@@ -38,4 +38,23 @@ defmodule MyList do
       (str) -> str
     end)
   end
+
+  def span(from, to) when to < from do
+    span(to, from)
+    |> Enum.reverse
+  end
+
+  def span(from, to) when from == to do
+    [from]
+  end
+
+  def span(from, to) do
+    span([to], from, to-1)
+  end
+  defp span(list, from, to) when from == to do
+    [to | list]
+  end
+  defp span(list, from, to) do
+    span([to | list], from, to-1)
+  end
 end
