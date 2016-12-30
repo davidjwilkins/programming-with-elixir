@@ -78,4 +78,31 @@ defmodule MyEnum do
   def reverse([head | tail]) do
     reverse(tail) ++ [head]
   end
+
+  def primes(up_to) when up_to > 2 do
+    for x <- span(2, up_to), is_prime(x), do: x
+  end
+
+  def is_prime(x) do
+    (2..x |> Enum.filter(fn a -> rem(x, a) == 0 end) |> length()) == 1
+  end
+
+  def span(from, to) when to < from do
+    span(to, from)
+    |> Enum.reverse
+  end
+
+  def span(from, to) when from == to do
+    [from]
+  end
+
+  def span(from, to) do
+    span([to], from, to-1)
+  end
+  defp span(list, from, to) when from == to do
+    [to | list]
+  end
+  defp span(list, from, to) do
+    span([to | list], from, to-1)
+  end
 end
