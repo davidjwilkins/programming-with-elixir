@@ -105,4 +105,10 @@ defmodule MyEnum do
   defp span(list, from, to) do
     span([to | list], from, to-1)
   end
+
+  def taxes(orders, tax_rates) do
+    for order <- orders do
+      Keyword.put order, :total_amount, (1+Keyword.get(tax_rates, order[:ship_to], 0)) * order[:net_amount]
+    end
+  end
 end
